@@ -13,7 +13,7 @@ import art
 # Function to check if API response is successful
 def is_api_response_successful(response):
     if response.status_code != 200:
-        print(f"\033[91mLỗi: {response.status_code}, {response.text}\033[0m")  # Màu đỏ
+        print(f"\033[91mLỗi: {response.status_code}, {response.text}\033[0m")
         return False
     return True
 
@@ -58,8 +58,7 @@ def append_df_to_excel(filename, df, sheet_name='Sheet1', startrow=None,
             book.remove(book.worksheets[idx])
             book.create_sheet(sheet_name, idx)
 
-        # Position the DataFrame data at [startrow, 1] if it fits, 
-        # otherwise append it to the end of the worksheet
+        
         startrow = 0 if startrow is None else startrow
         sheet = book[sheet_name]
         for row in dataframe_to_rows(df, index=False, header=False):
@@ -70,7 +69,7 @@ def append_df_to_excel(filename, df, sheet_name='Sheet1', startrow=None,
 
 def waifu_ascii():
     return """
-    có mấy dòng đơn
+  
 WWWMWWWMWWWWWWWWWWWWWWWWWWWWWMMWWWWWWWMMMWWMMMMWMMMMMMMWMMMMMMMMWWMMMW
 WWWWWWWWWWWWWWWWWWWWWWWWWWWMMMMMMMWWWMMMMMMMMMMMMMMMMMMMMMMMWWWWWWWMMM
 NNNWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWMMMMMMMMMMMMMWWWWWWWWWWMMM
@@ -120,10 +119,10 @@ def main():
     print("Chào mừng bạn đến với chương trình của tôi!")
     
     print(waifu_ascii_result)
-    apikey_file = input("\033[92mNhập đường dẫn đến file txt chứa danh sách API keys:\033[0m ")  # Màu xanh lá chuối
-    input_file_path = input("\033[92mNhập đường dẫn đến file input XLSX:\033[0m ")  # Màu xanh lá chuối
-    output_file_path = input("\033[92mNhập đường dẫn đến file output XLSX:\033[0m ")  # Màu xanh lá chuối
-    creativity = float(input("\033[92mNhập mức độ sáng tạo của API (từ 0.0 đến 0.9):\033[0m "))  # Màu xanh lá chuối
+    apikey_file = input("\033[92mNhập đường dẫn đến file txt chứa danh sách API keys:\033[0m ")
+    input_file_path = input("\033[92mNhập đường dẫn đến file input XLSX:\033[0m ")  
+    output_file_path = input("\033[92mNhập đường dẫn đến file output XLSX:\033[0m ")  
+    creativity = float(input("\033[92mNhập mức độ sáng tạo của API (từ 0.0 đến 0.9):\033[0m ")) 
     
     sheet_name = pd.ExcelFile(input_file_path).sheet_names[0]
 
@@ -137,7 +136,7 @@ def main():
         processed_keywords.update(output_data["keyword"])
 
     if not processed_keywords:
-        print("\033[91mKhông có dữ liệu để xử lý.\033[0m")  # Màu đỏ
+        print("\033[91mKhông có dữ liệu để xử lý.\033[0m")  
         return
 
     api_key_index = 0
@@ -147,13 +146,13 @@ def main():
     data = data.rename(columns={"heading": "keyword"})
     data.to_excel(input_file_path, sheet_name=sheet_name, index=False)
 
-    character_before_heading = input("\033[92mNhập ký tự trước 'heading' (ví dụ: giới thiệu + khóa học java):\033[0m ").strip()  # Màu xanh lá chuối
+    character_before_heading = input("\033[92mNhập ký tự trước 'heading' (ví dụ: giới thiệu + khóa học java):\033[0m ").strip() 
 
     for _, row in tqdm(data.iterrows(), desc="\033[92mXử lý tác vụ\033[0m", dynamic_ncols=True, total=len(data)):
         keyword = row["keyword"]
 
         if keyword in processed_keywords:
-            print(f"\033[92mKeyword '{keyword}' đã được xử lý trước đó, tiếp tục xử lý...\033[0m")  # Màu xanh lá chuối
+            print(f"\033[92mKeyword '{keyword}' đã được xử lý trước đó, tiếp tục xử lý...\033[0m") 
         else:
             api_key = api_keys[api_key_index]
             prompt = f"{character_before_heading} {keyword}" if character_before_heading else keyword
@@ -162,17 +161,17 @@ def main():
                 content = generate_text(prompt, api_key, creativity)
 
                 if content is not None:
-                    # Ghi dữ liệu vào DataFrame
+                   
                     output_df = pd.DataFrame([{"keyword": keyword, "content": content}])
 
-                    # Ghi dữ liệu vào file Excel
+                 
                     append_df_to_excel(output_file_path, output_df, sheet_name=sheet_name, startrow=None, index=False, header=False)
-                    print(f"\033[92mĐã ghi dữ liệu thành công vào file Excel cho keyword: {keyword}\033[0m")  # Màu xanh lá chuối
+                    print(f"\033[92mĐã ghi dữ liệu thành công vào file Excel cho keyword: {keyword}\033[0m")  
                     time.sleep(3)
                     
                     tasks_processed = api_key_index
                     api_key_index = (api_key_index + 1) % len(api_keys)
-                    print(f"\033[92mĐã đổi sang API key mới: {api_keys[api_key_index]}\033[0m")  # Màu xanh lá chuối
+                    print(f"\033[92mĐã đổi sang API key mới: {api_keys[api_key_index]}\033[0m") 
 
                     # Cập nhật danh sách processed_keywords
                     processed_keywords.add(keyword)
@@ -180,7 +179,7 @@ def main():
     # Ghi dữ liệu vào file Excel sau khi đã xử lý tất cả các từ khóa
     output_df = pd.DataFrame(output_data)
     append_df_to_excel(output_file_path, output_df, sheet_name=sheet_name, startrow=None, index=False, header=False)
-    print("\033[92mĐã ghi dữ liệu thành công vào file Excel.\033[0m")  # Màu xanh lá chuối
+    print("\033[92mĐã ghi dữ liệu thành công vào file Excel.\033[0m")  
 
 if __name__ == "__main__":
     main()
