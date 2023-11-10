@@ -1,12 +1,12 @@
 # web-automation
-Open Source automation các buớc trên website đơn giản và nhanh gọn nhất
-Các tính năng gồm có
-Tự động tạo content hàng loạt theo file exel
-Tự động tạo ảnh content bài viết ( đang update )
-Tự động đẩy bài viết gồm ảnh và content và heading lên website ( đang update ) 
-Tự động tách tên file trong one driver
-Tự động get list url file trong one driver
-
+* Open Source automation các buớc trên website đơn giản và nhanh gọn nhất
+* Các tính năng gồm có
+* Tự động tạo content hàng loạt theo file exel
+* Tự động tạo ảnh content bài viết ( đang update )
+* Tự động đẩy bài viết gồm ảnh và content và heading lên website ( đang update ) 
+* Tự động tách tên file trong one driver
+* Tự động get list url file trong one driver
+## Lưu ý!!!, form input và output giữ nguyên tiêu đề cột nhé mọi người ^^
 
 
 
