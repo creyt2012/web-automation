@@ -1,0 +1,1 @@
+apikey, mỗi dòng là 1 apikey
