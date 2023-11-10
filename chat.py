@@ -146,7 +146,8 @@ def main():
     data = data.rename(columns={"heading": "keyword"})
     data.to_excel(input_file_path, sheet_name=sheet_name, index=False)
 
-    character_before_heading = input("\033[92mNhập ký tự trước 'heading' (ví dụ: giới thiệu + khóa học java):\033[0m ").strip() 
+    character_before_heading = input("\033[92mNhập ký tự trước {keyword} (ví dụ form: Viết bài viết chuẩn seo về {keyword}
+list keyword này được thêm vào file input:\033[0m ").strip() 
 
     for _, row in tqdm(data.iterrows(), desc="\033[92mXử lý tác vụ\033[0m", dynamic_ncols=True, total=len(data)):
         keyword = row["keyword"]
